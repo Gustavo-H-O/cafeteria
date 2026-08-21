@@ -9,5 +9,8 @@
         <module name="Cafeteria" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Cafeteria" target="26" />
+    </bytecodeTargetLevel>
   </component>
 </project>
