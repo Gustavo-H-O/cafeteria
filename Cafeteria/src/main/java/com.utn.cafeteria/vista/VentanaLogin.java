@@ -4,14 +4,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 public final class VentanaLogin {
     // limitar los intentos de login a 3
-    private static final int intentosMaximos = 3;
+    private static final int MAXIMOS_INTENTOS = 3;
 
     private VentanaLogin() {
     }
 
     //Esto muestra el dialogo de inicio de sesion
     public static usuario mostrar(servicioAuntenticacion servicio) {
-        int intentosRestantes = intentosMaximos;
+        int intentosRestantes = MAXIMOS_INTENTOS;
         while (intentosRestantes > 0) {
             String usuario = JOptionPane.showInputDialog(null, "Usuario", Mensajes.TituloLogin,
                     JOptionPane.QUESTION_MESSAGE);
@@ -42,7 +42,7 @@ public final class VentanaLogin {
                 mostrarError(String.format(Mensajes.CREDENCIALES_INCORRECTAS, intentosRestantes));
             }
         }
-        mostrarError(Mensajes.Muchos_Intentos_Fallidos);
+        mostrarError(Mensajes.INTENTOS_AGOTADOS);
         return null;
     }
 
