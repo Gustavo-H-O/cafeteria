@@ -25,11 +25,12 @@ public class Caja {
     //Compara el monto de tarjeta declarado por la persona cajera contra el registrado.
     public int compararTarjeta(double declarado){return comparar(declarado, totalTarjeta);}
 
-    private int comparar(double declarado, double registrado){
-        if(Math.abs(declarado-registrado <= TOLERANCIA)){
+    private int comparar(double declarado, double registrado) {
+        if (Math.abs(declarado - registrado) <= TOLERANCIA) {
             return 0;
         }
         return declarado < registrado ? -1 : 1;
+    }
 
         // Marca la caja como cerrada impidiendo nuevas ventas
         public void marcarCerrada(){ cerrada = true; }
@@ -43,11 +44,3 @@ public class Caja {
     }
 
 
-
-
-
-
-
-
-
-}

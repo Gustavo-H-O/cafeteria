@@ -27,6 +27,11 @@ public class Producto {
         return nombre;
     }
 
+    //Obtiene el precio unitario del producto.
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
     //Obtiene las existencias actuales del producto.
     public int getStock() {
         return stock;

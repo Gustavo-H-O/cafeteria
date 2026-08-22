@@ -1,19 +1,26 @@
-package vista;
+package com.utn.cafeteria.vista;
 
+import com.utn.cafeteria.modelo.Usuario;
+import com.utn.cafeteria.servicio.ServicioAutenticacion;
+import com.utn.cafeteria.util.Mensajes;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+
+// Ventana de inicio de sesion. Solicita usuario y contrasena, enmascarando la contrasena, y limita los intentos permitidos.
+
 public final class VentanaLogin {
-    // limitar los intentos de login a 3
-    private static final int MAXIMOS_INTENTOS = 3;
+
+    private static final int MAXIMO_INTENTOS = 3;
 
     private VentanaLogin() {
     }
 
-    //Esto muestra el dialogo de inicio de sesion
-    public static usuario mostrar(servicioAuntenticacion servicio) {
-        int intentosRestantes = MAXIMOS_INTENTOS;
+    //Muestra el dialogo de inicio de sesion y autentica a la persona usuaria.
+
+    public static Usuario mostrar(ServicioAutenticacion servicio) {
+        int intentosRestantes = MAXIMO_INTENTOS;
         while (intentosRestantes > 0) {
-            String usuario = JOptionPane.showInputDialog(null, "Usuario", Mensajes.TituloLogin,
+            String usuario = JOptionPane.showInputDialog(null, "Usuario:", Mensajes.TITULO_LOGIN,
                     JOptionPane.QUESTION_MESSAGE);
             if (usuario == null) {
                 return null;
@@ -46,9 +53,10 @@ public final class VentanaLogin {
         return null;
     }
 
-    //Solicitud de credenciales de admin temporalmente
+    // Solicita credenciales de administrador para elevar temporalmente los privilegios de la sesion activa
     public static String[] solicitarElevacion() {
-        String usuario = JOptionPane.showInputDialog(null, "Esta operación requiere autorización de un administrador.\nUsuario administrador:",
+        String usuario = JOptionPane.showInputDialog(null,
+                "Esta operación requiere autorización de un administrador.\nUsuario administrador:",
                 Mensajes.TITULO_ELEVACION, JOptionPane.QUESTION_MESSAGE);
         if (usuario == null) {
             return null;
@@ -76,6 +84,6 @@ public final class VentanaLogin {
     }
 
     private static void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, Mensajes.Titulo_Error, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, mensaje, Mensajes.TITULO_ERROR, JOptionPane.ERROR_MESSAGE);
     }
 }

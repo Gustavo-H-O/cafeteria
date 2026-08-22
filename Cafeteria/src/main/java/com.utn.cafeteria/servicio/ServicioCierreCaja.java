@@ -11,15 +11,14 @@ public class ServicioCierreCaja {
     public ServicioCierreCaja (Caja caja){ this.caja = caja;}
 
     //Realiza el arqueo de caja comparando los montos declarados contra loa registrados
-    public  ResultadoArqueo arquear(double efectivoDeclarado, double tarjetaDeclarado, String sutorizadiPor){
+    public ResultadoArqueo arquear(double efectivoDeclarado, double tarjetaDeclarada, String autorizadoPor) {
         Estado estadoEfectivo = traducir(caja.compararEfectivo(efectivoDeclarado));
-        Estado estadoTarjeta = traducir(caja.compararTarjeta(tarjetaDeclarado));
-
+        Estado estadoTarjeta = traducir(caja.compararTarjeta(tarjetaDeclarada));
         ResultadoArqueo resultado =
-                new ResultadoArqueo(estadoEfectivo,estadoTarjeta, caja,getFacturasEmitidas(), autorizadoPor);
+                new ResultadoArqueo(estadoEfectivo, estadoTarjeta, caja.getFacturasEmitidas(), autorizadoPor);
         caja.marcarCerrada();
         return resultado;
-
+    }
         private Estado traducir(int comparacion){
             if (comparacion == 0){
                 return Estado.CUADRE_EXACTO;
@@ -49,4 +48,3 @@ public class ServicioCierreCaja {
 
 
 
-}

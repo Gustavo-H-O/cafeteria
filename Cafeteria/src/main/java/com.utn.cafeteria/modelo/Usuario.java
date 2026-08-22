@@ -17,10 +17,10 @@ public class Usuario {
     }
 
     //Verificador de las claves del usuario
-    public boolean credencialValida(String usuario, char[] clave){
-    boolean coincide = this.nombreUsuario.equals(usuario) && this.clave.equals(new String(clave));
-    Arrays.fill(clave, '0');
-    return coincide;
+    public boolean credencialesValidas(String usuario, char[] clave) {
+        boolean coincide = this.nombreUsuario.equals(usuario) && this.clave.equals(new String(clave));
+        Arrays.fill(clave, '0');
+        return coincide;
     }
 
     //Nombre de usuario
@@ -30,5 +30,7 @@ public class Usuario {
     public Rol getRol() {return rol;}
 
     //verifica si el usuario tiene rol de admin
-    public boolean esAdmin() {return rol.esAdmin();}
+    public boolean esAdministrador() {
+        return rol.esAdministrador();
+    }
 }
