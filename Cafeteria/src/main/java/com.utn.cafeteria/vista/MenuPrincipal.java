@@ -1,12 +1,14 @@
 package com.utn.cafeteria.vista;
 
-import util.Validador;
 
-import javax.swing.*;
+import com.utn.cafeteria.modelo.Rol;
+//import com.utn.cafeteria.util.Mensajes;
+import com.utn.cafeteria.util.Validador;
+import javax.swing.JOptionPane;
 
 public final class MenuPrincipal {
 
-    private static final int Opcion_Invalida =-1;
+    private static final int OPCION_INVALIDA =-1;
 
     private MenuPrincipal (){
 
@@ -18,13 +20,13 @@ public final class MenuPrincipal {
 
             }
             String mensaje = "Usuario:" + nombreUsuario + "Rol: " + rol.getEtiqueta() = "\n\n" = textoOpciones + "\nDigite el numero de opcin que desea utilizar";
-            String texto = JOptionPane.showInputDialog( null, mensaje, Mensaje.Titulo_Menu, JDesktopPane.Pregunta_Mensjae);
+            String texto = JOptionPane.showInputDialog( null, mensaje, Mensaje.TITULO_MENU, JDesktopPane.Pregunta_Mensjae);
             if(texto == null){
-                return Opcion_Invalida;
+                return OPCION_INVALIDA;
             }
             String cortado = texto.trim();
             if (!Validador.esEnteroValido(cortado)){
-                return Opcion_Invalida;
+                return OPCION_INVALIDA;
             }
             return Integer.parseInt(cortado);
         }
