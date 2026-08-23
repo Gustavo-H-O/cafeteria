@@ -1,15 +1,15 @@
 package com.utn.cafeteria.vista;
 
-//import com.utn.cafeteria.modelo.Factura;
-//import com.utn.cafeteria.modelo.MetodoPago;
-//import com.utn.cafeteria.util.FormatoUtil;
-//import com.utn.cafeteria.util.Mensajes;
-//import com.utn.cafeteria.util.Validador;
+import com.utn.cafeteria.modelo.Factura;
+import com.utn.cafeteria.modelo.MetodoPago;
+import com.utn.cafeteria.util.FormatoUtil;
+import com.utn.cafeteria.util.Mensajes;
+import com.utn.cafeteria.util.Validador;
 import com.utn.cafeteria.modelo.MetodoPago;
 
 import javax.swing.JOptionPane;
 
-public class VistaFactura {
+public final class VistaFactura {
     private VistaFactura(){
     }
 
@@ -33,7 +33,7 @@ public class VistaFactura {
     }
     // Muestra la factura
     public static void MostarFactura(Factura f){
-    JOptionPane.showMessageDialog(null, FormatoUtil.enPanelMonoEspaciado(f.toString(), 20, 60),Mensajes. TITULO_FACTURA, JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(null, FormatoUtil.enPanelMonoespaciado(f.toString(), 20, 60),Mensajes. TITULO_FACTURA, JOptionPane.INFORMATION_MESSAGE);
 
 
 }

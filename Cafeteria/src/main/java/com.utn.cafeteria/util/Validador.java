@@ -56,6 +56,38 @@ public final class Validador {
             return valor;
         }
     }
+    public static String leerTextoNoVacio(String mensaje, String titulo, int maxCaracteres) {
+        while (true) {
+            String texto = JOptionPane.showInputDialog(null, mensaje, titulo, JOptionPane.QUESTION_MESSAGE);
+            if (texto == null) {
+                return null;
+            }
+            if (texto.isBlank()) {
+                mostrarError("Debe digitar un valor.");
+                continue;
+            }
+            String recortado = texto.trim();
+            if (recortado.length() > maxCaracteres) {
+                mostrarError("El texto no puede superar los " + maxCaracteres + " caracteres.");
+                continue;
+            }
+            return recortado;
+        }
+    }
+
+    /**
+     * Pide confirmacion a la persona usuaria mediante un dialogo de si/no.
+     *
+     * @param mensaje texto de la pregunta a confirmar.
+     * @param titulo  titulo del dialogo.
+     * @return {@code true} si la persona usuaria elige la opcion afirmativa.
+     */
+    public static boolean confirmar(String mensaje, String titulo) {
+        int opcion = JOptionPane.showConfirmDialog(null, mensaje, titulo,
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        return opcion == JOptionPane.YES_OPTION;
+    }
+
 
     //Solicita repetidamente un texto no vacio y dentro del largo maximo permitido,
     public static boolean esEnteroValido(String texto) {
