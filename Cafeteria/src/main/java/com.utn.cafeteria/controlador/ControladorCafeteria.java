@@ -66,7 +66,7 @@ public class ControladorCafeteria {
         int numero;
         do{
             numero = MenuPrincipal.mostrarMenu(usuarioActivo.getNombreUsuario(), rol, opciones);
-            Operacion op = servicioAutorizacion.opcionesPara(rol);
+            Operacion op = servicioAutorizacion.operacionDeOpcion(rol, numero);
             if (op == null) {
                 Mensajes.opcionInvalida(opciones.length);
                 continue;
@@ -239,7 +239,21 @@ public class ControladorCafeteria {
             }
         } while (true);
     }
+    private void opcionAgregarProducto() {
+        Object[] datos = VistaGestionInventario.pedirDatosNuevoProducto();
+        if (datos == null) {
+            return;
+        }
+        String nombre = (String) datos[0];
+        double precio = (Double) datos[1];
+        int stockInicial = (Integer) datos[2];
 
+        String error = servicioInventario.agregarProducto(nombre, precio, stockInicial);
+        if (error != null) {
+            mostrarError(error);
+            return;
+        }
+    }
     private void opcionEliminarProducto() {
         Integer codigo = VistaGestionInventario.pedirCodigo(servicioInventario.generarReporte(), "eliminar");
         if (codigo == null) {

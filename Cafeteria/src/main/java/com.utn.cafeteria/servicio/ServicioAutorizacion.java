@@ -12,6 +12,12 @@ public class ServicioAutorizacion {
                 Operacion.GESTIONAR_INVENTARIO, Operacion.SALIR
         };
 
+        private static final Operacion[] OPERACIONES_ADMINISTRADOR = {
+                Operacion.VER_PRODUCTOS, Operacion.REGISTRAR_COMPRA, Operacion.FACTURAR,
+                Operacion.CERRAR_CAJA, Operacion.GESTIONAR_INVENTARIO, Operacion.SALIR
+        };
+
+
         //Indica si el usuario tiene permiso para poder realizar una operacion
         public boolean tienePermiso(Usuario usuario, Operacion operacion) {
             Operacion[] operaciones = operacionesPara(usuario.getRol());
