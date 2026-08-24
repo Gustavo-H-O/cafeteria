@@ -52,7 +52,7 @@ public class ControladorCafeteria {
 
     //Autentica a la persona usuaria y, si el ingreso es exitoso, arranca el ciclo del menu principal.
     public void iniciar(){
-        usuarioActivo = vista.VentanaLogin.mostrar(servicioAutenticacion);
+        usuarioActivo = VentanaLogin.mostrar(servicioAutenticacion);
         if(usuarioActivo != null){
             System.out.println("[INFO] Sesion iniciada: usuario " + usuarioActivo.getNombreUsuario());
             ejecutarCicloMenu();
@@ -66,6 +66,7 @@ public class ControladorCafeteria {
         int numero;
         do{
             numero = MenuPrincipal.mostrarMenu(usuarioActivo.getNombreUsuario(), rol, opciones);
+            Operacion op = servicioAutorizacion.opcionesPara(rol);
             if (op == null) {
                 Mensajes.opcionInvalida(opciones.length);
                 continue;
