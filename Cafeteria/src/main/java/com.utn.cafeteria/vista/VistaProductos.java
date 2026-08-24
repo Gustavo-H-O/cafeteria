@@ -8,7 +8,7 @@ public class VistaProductos {
     private VistaProductos(){
     }
     public static void mostrarInventario(String reporte){
-        JOptionPane.showMessageDialog(null, FormatoUtil.enPanelMonoespaciado(reporte,12,60),Mensajes.TITULO_PRODUCTOS,JOptionPane.INFORMATION_MESSAGE, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, FormatoUtil.enPanelMonoespaciado(reporte,12,60),Mensajes.TITULO_PRODUCTOS,JOptionPane.INFORMATION_MESSAGE);
 
     }
 }
