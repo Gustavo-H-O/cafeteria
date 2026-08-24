@@ -24,7 +24,7 @@ import com.utn.cafeteria.vista.VistaGestionInventario;
 import com.utn.cafeteria.vista.VistaProductos;
 import javax.swing.JOptionPane;
 
-//coordinacion completa de la aplicacion
+//Coordina el flujo completo de la aplicacion
 public class ControladorCafeteria {
 
     private final Inventario inventario;
@@ -40,7 +40,7 @@ public class ControladorCafeteria {
 
     //Crea el controlador e inicializa el inventario, la caja y los servicios de la sesion.
 
-    public  ControladorCafeteria(){
+    public ControladorCafeteria() {
         this.inventario = new Inventario();
         this.caja = new Caja();
         this.servicioAutenticacion = new ServicioAutenticacion();
@@ -50,22 +50,23 @@ public class ControladorCafeteria {
         this.servicioCierreCaja = new ServicioCierreCaja(caja);
     }
 
-    //Autentica a la persona usuaria y, si el ingreso es exitoso, arranca el ciclo del menu principal.
-    public void iniciar(){
-        usuarioActivo = vista.VentanaLogin.mostrar(servicioAutenticacion);
-        if(usuarioActivo != null){
+    //Autentica a la persona usuaria
+    public void iniciar() {
+        usuarioActivo = VentanaLogin.mostrar(servicioAutenticacion);
+        if (usuarioActivo != null) {
             System.out.println("[INFO] Sesion iniciada: usuario " + usuarioActivo.getNombreUsuario());
             ejecutarCicloMenu();
         }
         System.exit(0);
     }
 
-    private void ejecutarCicloMenu(){
+    private void ejecutarCicloMenu() {
         Rol rol = usuarioActivo.getRol();
         String[] opciones = servicioAutorizacion.opcionesPara(rol);
         int numero;
-        do{
+        do {
             numero = MenuPrincipal.mostrarMenu(usuarioActivo.getNombreUsuario(), rol, opciones);
+            Operacion op = servicioAutorizacion.operacionDeOpcion(rol, numero);
             if (op == null) {
                 Mensajes.opcionInvalida(opciones.length);
                 continue;
@@ -85,6 +86,7 @@ public class ControladorCafeteria {
             }
         } while (true);
     }
+
     private void opcionVerProductos() {
         VistaProductos.mostrarInventario(servicioInventario.generarReporte());
     }
@@ -125,6 +127,7 @@ public class ControladorCafeteria {
         System.out.println("[INFO] Producto agregado al pedido: " + producto.getNombre() + " x" + cantidad);
         VistaCompra.mostrarPedido(facturaEnCurso);
     }
+
     private void opcionFacturar() {
         if (caja.estaCerrada()) {
             mostrarAdvertencia(Mensajes.CAJA_CERRADA);
@@ -135,7 +138,7 @@ public class ControladorCafeteria {
             return;
         }
 
-        // se revalida el stock justo antes de facturar, por si cambio desde que se armo el pedido
+        // se revalida el stock justo antes de facturar, por si cambio desde que se arma el pedido
         String error = servicioInventario.validarLineasContra(facturaEnCurso);
         if (error != null) {
             mostrarError(error);
@@ -158,10 +161,8 @@ public class ControladorCafeteria {
         facturaEnCurso = null;
     }
 
-    /**
-     Cierra la caja del dia. Si quien esta en sesion no es administrador, la
-     operacion exige una elevacion temporal de privilegios antes de continuar.
-     */
+    //Cierra la caja del dia. Si quien esta en sesion no es administrador, la operacion exige una elevacion temporal de privilegios antes de continuar.
+
     private void opcionCerrarCaja() {
         if (caja.estaCerrada()) {
             mostrarAdvertencia(Mensajes.CAJA_CERRADA);
@@ -197,6 +198,7 @@ public class ControladorCafeteria {
     }
 
     //Pide credenciales de administrador para autorizar una operacion restringida
+
     private Usuario elevarAAdministrador() {
         mostrarAdvertencia(Mensajes.CIERRE_REQUIERE_ELEVACION);
 
@@ -222,7 +224,8 @@ public class ControladorCafeteria {
         return autenticado;
     }
 
-    //Ejecuta el submenu de gestion de inventario
+    //Ejecuta el submenu de gestion de inventario: alta, baja y reabastecimiento
+
     private void opcionGestionarInventario() {
         int opcion;
         do {
@@ -237,6 +240,25 @@ public class ControladorCafeteria {
                 default -> Mensajes.opcionInvalida(4);
             }
         } while (true);
+    }
+
+    private void opcionAgregarProducto() {
+        Object[] datos = VistaGestionInventario.pedirDatosNuevoProducto();
+        if (datos == null) {
+            return;
+        }
+        String nombre = (String) datos[0];
+        double precio = (Double) datos[1];
+        int stockInicial = (Integer) datos[2];
+
+        String error = servicioInventario.agregarProducto(nombre, precio, stockInicial);
+        if (error != null) {
+            mostrarError(error);
+            return;
+        }
+
+        Producto creado = inventario.getProductos()[inventario.getCantidadProductos() - 1];
+        mostrarInformacion(String.format(Mensajes.ALTA_EXITOSA, creado.getCodigo()));
     }
 
     private void opcionEliminarProducto() {
@@ -289,6 +311,7 @@ public class ControladorCafeteria {
     }
 
     //Pide confirmacion de salida, advirtiendo si hay un pedido sin facturar.
+
     private boolean opcionSalir() {
         String mensaje = (facturaEnCurso != null && !facturaEnCurso.estaVacia())
                 ? Mensajes.SALIR_CON_PEDIDO_PENDIENTE
@@ -316,17 +339,3 @@ public class ControladorCafeteria {
         JOptionPane.showMessageDialog(null, mensaje, Mensajes.TITULO_INFORMACION, JOptionPane.INFORMATION_MESSAGE);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

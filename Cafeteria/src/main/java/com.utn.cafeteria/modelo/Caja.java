@@ -11,10 +11,10 @@ public class Caja {
 
     // Registra el total pagado de una factura ya cerrada en el rubro que corresponda segun su metodo de pago.
 
-    public void registarVenta (Factura f){
-        if (f.getMetodoPago() == MetodoPago.EFECTIVO){
+    public void registrarVenta(Factura f) {
+        if (f.getMetodoPago() == MetodoPago.EFECTIVO) {
             totalEfectivo += f.calcularTotalPagar();
-        }else {
+        } else {
             totalTarjeta += f.calcularTotalPagar();
         }
         facturasEmitidas++;
